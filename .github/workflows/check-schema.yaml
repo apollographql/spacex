@@ -1,0 +1,36 @@
+name: Tests and Checks
+on: push
+
+jobs:
+  get_subgraph_name:
+    if: false
+    uses: ./.github/workflows/apollo.yaml
+
+  check_schema:
+    name: Check Schema with Apollo Studio
+    needs: [ get_subgraph_name ]
+    runs-on: ubuntu-latest
+    env:
+      APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
+      APOLLO_GRAPH_REF: ${{ secrets.APOLLO_GRAPH_REF }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Rover
+        run: |
+          curl -sSL https://rover.apollo.dev/nix/latest | sh
+          echo "$HOME/.rover/bin" >> $GITHUB_PATH
+      - if: env.APOLLO_KEY != '' &&  env.APOLLO_GRAPH_REF != ''
+        run: rover subgraph check ${{ secrets.APOLLO_GRAPH_REF }} --schema schema.graphql --name ${{ needs.get_subgraph_name.outputs.name }}
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          check-latest: true
+      - name: Setup project
+        run: npm install
+      - name: Test
+        run: npm run test

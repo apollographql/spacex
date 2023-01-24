@@ -1,0 +1,18 @@
+name: Introspect subgraph name
+
+on:
+  workflow_call:
+    outputs:
+      name:
+        description: "Name of the subgraph to check or publish"
+        value: ${{ jobs.get_subgraph_name.outputs.name }}
+jobs:
+  get_subgraph_name:
+    name: Introspect package.json to get subgraph name
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - id: get_subgraph_name 
+        run: echo "::set-output name=name::$(cat package.json | grep "name" | cut -d':' -f 2 | cut -d'"' -f 2)"
+    outputs:
+      name: ${{ steps.get_subgraph_name.outputs.name }}
