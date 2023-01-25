@@ -29,6 +29,20 @@ async function main() {
     typeDefs,
     resolvers,
     introspection: true,
+    plugins: [
+      {
+        async serverWillStart() {
+          return {
+            async renderLandingPage() {
+              const html = `
+              <!DOCTYPE html>
+              <meta http-equiv="Refresh" content="0; url='https://studio.apollographql.com/public/SpaceX-pxxbxen/explorer?variant=current'" />`;
+              return { html };
+            },
+          };
+        },
+      },
+    ],
   });
   const { url } = await startStandaloneServer(server, {
     context,
