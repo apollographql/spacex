@@ -23,7 +23,7 @@ type Address {
 }
 
 type Capsule {
-  dragon: Dragon
+  dragon: Dragon @deprecated(reason:"This is not available in the REST API after MongoDB has been deprecated")
   id: ID
   landings: Int
   missions: [CapsuleMission]
@@ -606,9 +606,9 @@ type Query {
   ): [Launch]
   launchpad(id: ID!): Launchpad
   launchpads(limit: Int, offset: Int): [Launchpad]
-  mission(id: ID!): Mission
-  missions(find: MissionsFind, limit: Int, offset: Int): [Mission]
-  missionsResult(find: MissionsFind, limit: Int, offset: Int): MissionResult
+  mission(id: ID!): Mission @deprecated(reason:"Mission is not available on REST API after MongoDB deprecation")
+  missions(find: MissionsFind, limit: Int, offset: Int): [Mission] @deprecated(reason:"Mission is not available on REST API after MongoDB deprecation")
+  missionsResult(find: MissionsFind, limit: Int, offset: Int): MissionResult @deprecated(reason:"Mission is not available on REST API after MongoDB deprecation")
   payload(id: ID!): Payload
   payloads(
     find: PayloadsFind

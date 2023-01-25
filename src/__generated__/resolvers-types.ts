@@ -29,6 +29,7 @@ export type Address = {
 
 export type Capsule = {
   __typename?: 'Capsule';
+  /** @deprecated This is not available in the REST API after MongoDB has been deprecated */
   dragon?: Maybe<Dragon>;
   id?: Maybe<Scalars['ID']>;
   landings?: Maybe<Scalars['Int']>;
@@ -560,8 +561,11 @@ export type Query = {
   launchesUpcoming?: Maybe<Array<Maybe<Launch>>>;
   launchpad?: Maybe<Launchpad>;
   launchpads?: Maybe<Array<Maybe<Launchpad>>>;
+  /** @deprecated Mission is not available on REST API after MongoDB deprecation */
   mission?: Maybe<Mission>;
+  /** @deprecated Mission is not available on REST API after MongoDB deprecation */
   missions?: Maybe<Array<Maybe<Mission>>>;
+  /** @deprecated Mission is not available on REST API after MongoDB deprecation */
   missionsResult?: Maybe<MissionResult>;
   payload?: Maybe<Payload>;
   payloads?: Maybe<Array<Maybe<Payload>>>;

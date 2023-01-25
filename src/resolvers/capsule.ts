@@ -1,25 +1,5 @@
-import { Capsule, Resolvers } from "../__generated__/resolvers-types";
-
-const applyLimitOffset = ({
-  data,
-  limit,
-  offset,
-}: {
-  data: Array<any>;
-  limit: number;
-  offset: number;
-}) => {
-  if (limit && offset) {
-    if (limit + offset > data.length) return data.slice(offset);
-    return data.slice(offset, limit);
-  } else if (limit) {
-    return data.slice(0, limit);
-  } else if (offset) {
-    return data.slice(offset);
-  } else {
-    return data;
-  }
-};
+import { applyLimitOffset } from "../limit-offset-service";
+import { Resolvers } from "../__generated__/resolvers-types";
 
 const resolvers: Resolvers = {
   Query: {
@@ -42,14 +22,17 @@ const resolvers: Resolvers = {
     ) => {
       return [];
     },
-    capsule: async (obj, { id }, context) => {
-      return await context.api.getCapsule(id);
+    capsule: (obj, { id }, context) => {
+      return context.api.getCapsule(id);
     },
   },
 };
 const parseCapsules = (capsule: any) => ({
   ...capsule,
   // id: capsule.capsule_serial,
-  launches: capsule.launches && capsule.launches.length > 0 ? capsule.launches[0] : undefined
+  launches:
+    capsule.launches && capsule.launches.length > 0
+      ? capsule.launches[0]
+      : undefined,
 });
 export { resolvers };
