@@ -1,5 +1,7 @@
 import { Capsule } from "./__generated__/resolvers-types";
 
+import fetch from 'node-fetch';
+
 export default class API {
   baseUrl = 'https://api.spacexdata.com/v4';
 
