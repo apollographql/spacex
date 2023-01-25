@@ -2,7 +2,9 @@ import { parseShip } from "../parse-service";
 import { applyLimitOffset } from "../limit-offset-service";
 import {
   LaunchesPastResult,
+  LaunchRocket,
   Resolvers,
+  Rocket,
 } from "../__generated__/resolvers-types";
 
 const resolvers: Resolvers = {
@@ -28,8 +30,13 @@ const resolvers: Resolvers = {
       if (data) return { data, result: { totalCount: data.length } };
       else return { result: { totalCount: 0 } };
     },
-    launchesUpcoming: (obj, { find, offset, order, sort, limit }, context) => {
-      return context.api.getUpcomingLaunchs();
+    launchesUpcoming: async (
+      obj,
+      { find, offset, order, sort, limit },
+      context
+    ) => {
+      const data = await context.api.getUpcomingLaunchs();
+      return applyLimitOffset({ data, limit, offset });
     },
     launch: (obj, { id }, context) => {
       return context.api.getLaunch(id);
@@ -46,18 +53,24 @@ const resolvers: Resolvers = {
       return context.api.getCore((parent as any)?.core_serial);
     },
   },
-  LaunchRocket: {
-    rocket: async (rocket_id, args, context) => {
-      return context.api.getRocket(rocket_id as string);
-    },
-    rocket_name: (parent: any) => parent.name
-  },
   Launch: {
     ships: async (parent, args, context) => {
       return parent.ships.map(async (ship: any) => {
         const result = await context.api.getShip(ship.ship_id);
         return parseShip(result);
       });
+    },
+    rocket: async (parent, args, context) => {
+      const id = parent as string;
+      if (typeof parent.rocket === "string") {
+        const rocket = await context.api.getRocket(parent.rocket as string);
+        return {
+          rocket,
+          fairings: (parent as any)?.fairings,
+          rocket_name: rocket.name,
+          rocket_type: rocket.type,
+        };
+      } else return parent.rocket;
     },
     links: (parent, args, context) => {
       const links = parent.links as any;
@@ -72,13 +85,16 @@ const resolvers: Resolvers = {
         video_link: links?.webcast,
       };
     },
-    launch_date_local: (parent: any)=> parent?.date_local,
-    launch_date_unix: (parent: any)=> parent?.date_unix,
-    launch_date_utc: (parent: any)=> parent?.date_utc,
-    launch_success: (parent: any)=> parent?.launch_success,
-    launch_year: (parent: any)=> parent?.date_local?.splice(0,4),
-    mission_name: (parent: any)=> parent?.name,
-    mission_id: (parent)=>[parent.id]
+    launch_date_local: (parent: any) => parent?.date_local,
+    launch_date_unix: (parent: any) => parent?.date_unix,
+    launch_date_utc: (parent: any) => parent?.date_utc,
+    launch_success: (parent: any) => parent?.launch_success,
+    launch_year: (parent: any) => parent?.date_local?.splice(0, 4),
+    mission_name: (parent: any) => parent?.name,
+    mission_id: (parent) => [parent.id],
+    telemetry: (parent) => {
+      return parent.telemetry;
+    }
   },
   History: {
     flight: async (parent, args, context) => {
