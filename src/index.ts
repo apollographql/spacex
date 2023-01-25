@@ -16,7 +16,7 @@ const context: ContextFunction<
   [StandaloneServerContextFunctionArgument],
   DataSourceContext
 > = async ({ req }) => ({
-  api: new API()
+  api: new API(),
 });
 
 async function main() {
@@ -26,7 +26,9 @@ async function main() {
     })
   );
   const server = new ApolloServer({
-    typeDefs, resolvers,
+    typeDefs,
+    resolvers,
+    introspection: true,
   });
   const { url } = await startStandaloneServer(server, {
     context,
