@@ -1184,17 +1184,8 @@ enum users_select_column {
   column
   name
   id
-  column
-  name
-  name
-  column
-  name
   rocket
-  column
-  name
   timestamp
-  column
-  name
   twitter
 }
 
@@ -1216,17 +1207,8 @@ enum users_update_column {
   column
   name
   id
-  column
-  name
-  name
-  column
-  name
   rocket
-  column
-  name
   timestamp
-  column
-  name
   twitter
 }
 

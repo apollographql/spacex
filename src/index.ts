@@ -1,6 +1,6 @@
 import { readFileSync } from "fs";
 import gql from "graphql-tag";
-import { buildSubgraphSchema } from "@apollo/subgraph";
+// import { buildSubgraphSchema } from "@apollo/subgraph";
 import { ApolloServer, ContextFunction } from "@apollo/server";
 import {
   StandaloneServerContextFunctionArgument,
@@ -27,7 +27,7 @@ async function main() {
     })
   );
   const server = new ApolloServer({
-    schema: buildSubgraphSchema({ typeDefs, resolvers }),
+    typeDefs, resolvers,
   });
   const { url } = await startStandaloneServer(server, {
     context,
