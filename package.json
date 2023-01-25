@@ -30,7 +30,8 @@
     "@apollo/subgraph": "latest",
     "graphql": "latest",
     "graphql-tag": "latest",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "node-fetch": "^3.3.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.6.2",

@@ -12,6 +12,7 @@ import resolvers from "./resolvers";
 const subgraphName = require("../package.json").name;
 import { DataSourceContext } from "./types/DataSourceContext";
 import API from "./api";
+import fetch from 'node-fetch';
 
 const context: ContextFunction<
   [StandaloneServerContextFunctionArgument],
