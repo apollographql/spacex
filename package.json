@@ -26,7 +26,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@apollo/server": "^4.0.0",
+    "@apollo/server": "^4.1.0",
     "graphql": "latest",
     "graphql-tag": "latest",
     "lodash": "^4.17.21",
