@@ -94,7 +94,11 @@ const resolvers: Resolvers = {
     mission_id: (parent) => [parent.id],
     telemetry: (parent) => {
       return parent.telemetry;
-    }
+    },
+    upcoming: async (parent) => {
+      await new Promise((r) => setTimeout(r, 3000));
+      return parent.upcoming;
+    },
   },
   History: {
     flight: async (parent, args, context) => {
@@ -105,5 +109,4 @@ const resolvers: Resolvers = {
     },
   },
 };
-
 export { resolvers };
