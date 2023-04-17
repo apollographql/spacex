@@ -5,6 +5,8 @@ import {
   StandaloneServerContextFunctionArgument,
   startStandaloneServer,
 } from "@apollo/server/standalone";
+import responseCachePlugin from '@apollo/server-plugin-response-cache';
+import { ApolloServerPluginCacheControl } from '@apollo/server/plugin/cacheControl';
 
 const port = process.env.PORT ?? "4001";
 import resolvers from "./resolvers";
@@ -30,6 +32,8 @@ async function main() {
     resolvers,
     introspection: true,
     plugins: [
+      ApolloServerPluginCacheControl({ defaultMaxAge: 86400 }),
+      responseCachePlugin(),
       {
         async serverWillStart() {
           return {
