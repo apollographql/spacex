@@ -5,14 +5,15 @@ import {
   StandaloneServerContextFunctionArgument,
   startStandaloneServer,
 } from "@apollo/server/standalone";
-import responseCachePlugin from '@apollo/server-plugin-response-cache';
-import { ApolloServerPluginCacheControl } from '@apollo/server/plugin/cacheControl';
+import responseCachePlugin from "@apollo/server-plugin-response-cache";
+import { ApolloServerPluginCacheControl } from "@apollo/server/plugin/cacheControl";
 
 const port = process.env.PORT ?? "4001";
 import resolvers from "./resolvers";
 const subgraphName = require("../package.json").name;
 import { DataSourceContext } from "./types/DataSourceContext";
 import API from "./api";
+import { buildSubgraphSchema } from "@apollo/subgraph";
 
 const context: ContextFunction<
   [StandaloneServerContextFunctionArgument],
@@ -28,8 +29,7 @@ async function main() {
     })
   );
   const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema: buildSubgraphSchema({ typeDefs, resolvers }),
     introspection: true,
     plugins: [
       ApolloServerPluginCacheControl({ defaultMaxAge: 86400 }),

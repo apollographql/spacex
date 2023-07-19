@@ -28,6 +28,7 @@
   "dependencies": {
     "@apollo/server": "^4.0.0",
     "@apollo/server-plugin-response-cache": "^4.1.2",
+    "@apollo/subgraph": "^2.5.0",
     "graphql": "latest",
     "graphql-tag": "latest",
     "lodash": "^4.17.21",
