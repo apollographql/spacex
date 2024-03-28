@@ -26,9 +26,9 @@
     "test": "jest"
   },
   "dependencies": {
-    "@apollo/server": "^4.0.0",
-    "@apollo/server-plugin-response-cache": "^4.1.2",
-    "@apollo/subgraph": "^2.5.0",
+    "@apollo/server": "^4.10.2",
+    "@apollo/server-plugin-response-cache": "^4.1.3",
+    "@apollo/subgraph": "^2.7.2",
     "graphql": "latest",
     "graphql-tag": "latest",
     "lodash": "^4.17.21",

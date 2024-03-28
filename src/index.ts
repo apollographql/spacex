@@ -33,7 +33,12 @@ async function main() {
     introspection: true,
     plugins: [
       ApolloServerPluginCacheControl({ defaultMaxAge: 86400 }),
-      responseCachePlugin(),
+      responseCachePlugin({
+        shouldWriteToCache: async (requestContext) => {
+          console.log(JSON.stringify(requestContext));
+          return false;
+        },
+      }),
       {
         async serverWillStart() {
           return {
