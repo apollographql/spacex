@@ -14,6 +14,7 @@ const subgraphName = require("../package.json").name;
 import { DataSourceContext } from "./types/DataSourceContext";
 import API from "./api";
 import { buildSubgraphSchema } from "@apollo/subgraph";
+import { parse, print } from "graphql";
 
 const context: ContextFunction<
   [StandaloneServerContextFunctionArgument],
@@ -35,7 +36,22 @@ async function main() {
       ApolloServerPluginCacheControl({ defaultMaxAge: 86400 }),
       responseCachePlugin({
         shouldWriteToCache: async (requestContext) => {
-          console.log(JSON.stringify(requestContext));
+          if (
+            requestContext.operationName != "IntrospectionQuery" &&
+            !requestContext.operationName
+              .toLowerCase()
+              .includes("introspection")
+          ){
+            console.log(
+              `Hash: ${requestContext.queryHash}\n\tAge: ${
+                requestContext.overallCachePolicy.maxAge
+              }\n\tOperation: ${
+                requestContext.source.replaceAll("\n","").replaceAll("\t","")
+              }\n\tVariables: ${JSON.stringify(
+                requestContext.request.variables
+              )}`
+            );
+          }
           return false;
         },
       }),
