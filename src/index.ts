@@ -38,9 +38,9 @@ async function main() {
         shouldWriteToCache: async (requestContext) => {
           if (
             requestContext.operationName != "IntrospectionQuery" &&
-            !requestContext.operationName
-              .toLowerCase()
-              .includes("introspection")
+            !requestContext?.operationName
+              ?.toLowerCase()
+              ?.includes("introspection")
           ){
             console.log(
               `Hash: ${requestContext.queryHash}\n\tAge: ${
