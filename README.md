@@ -1,7 +1,5 @@
 # SpaceX GraphQL API
 
-![Discord](https://img.shields.io/discord/1022972389463687228?logo=discord&logoColor=white&color=blue&style=flat&label=Discord)
-
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/WdJd2w?referralCode=xsbY2R)
 
 This graph is a recreation of the [SpaceXLand/api](https://github.com/SpaceXLand/api) project that was authored by [Carlos Rufo](https://github.com/itscarlosrufo). The code for this recreation is open source and can be viewed [here](https://github.com/apollographql/spacex).
@@ -19,7 +17,6 @@ This graph is meant for exploring historical SpaceX data. Any current space laun
 1. Join [The Space Dev's Discord Server](https://discord.gg/p7ntkNA) to receive the latest updates
 2. The Apollo DevRel team started up an [open sourced repository](https://github.com/apollographql/Space-Devs/issues) to create a GraphQL API for the LLv2. 
   a. You can query the data of this graph [here](https://studio.apollographql.com/public/space-devs/home?variant=main)
-3. Join the [Apollo Discord Server](https://discord.gg/graphos) and we can help get you plugged in.
 
 ## Accessing this graph
 
